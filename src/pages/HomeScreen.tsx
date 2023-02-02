@@ -1,5 +1,11 @@
+import NewsletterContainer from "../containers/NewsletterContainer";
+
 function HomeScreen() {
-  return <>Initial Project </>;
+  return (
+    <>
+      <NewsletterContainer />
+    </>
+  );
 }
 
 export default HomeScreen;
