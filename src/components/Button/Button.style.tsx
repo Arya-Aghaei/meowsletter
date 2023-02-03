@@ -18,7 +18,7 @@ export const ButtonComponent: any = styled.button`
   padding: 0.5rem 0.5rem;
   width: 100%;
   transition: all 0.3s ease-in-out;
-  background-color: #fa724c;
+  background-color: #7B4032;
   border-radius: 16px;
   border: 1px solid #fe8e6e;
   box-sizing: border-box;
