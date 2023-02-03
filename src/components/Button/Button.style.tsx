@@ -12,7 +12,7 @@ export const ButtonWrapper = styled.div`
 
 export const ButtonComponent: any = styled.button`
   height: 2.5rem;
-  outline: none;
+  outline-color: #fa724c;
   color: rgb(255, 255, 255);
   font-size: 1rem;
   padding: 0.5rem 0.5rem;

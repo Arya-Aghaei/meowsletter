@@ -4,7 +4,9 @@ interface InputProps {
   error?: string;
 }
 
-export const InputComponent: any = styled.input`
+export const InputComponent: any = styled.input.attrs(({ref}) => ({
+  ref: ref,
+}))`
   outline: none;
   color: rgb(255, 255, 255);
   font-size: 1rem;

@@ -41,16 +41,47 @@ const validateForm = (formValues: FormValues) => {
 };
 
 function NewsletterFormContainer() {
+  // State
   const [loading, setLoading] = useState(false);
   const [errors, setErrors]: any[] = useState([]);
   const [subscribed, setSubscribed] = useState(false);
+
+  // Refs
   const animationRef: any = React.useRef(null);
+  const emailRef: any = React.useRef(null);
+  const timeRef: any = React.useRef(null);
+  const languageRef: any = React.useRef(null);
 
   useEffect(() => {
     if (subscribed) {
       animationRef?.current?.play();
     }
   }, [subscribed]);
+
+  useEffect(() => {
+    if (errors.length && errors[0].field) {
+      //focus on first error
+      const firstError = errors[0];
+      if (
+        firstError.field === "email" &&
+        document.activeElement !== emailRef.current
+      ) {
+        emailRef?.current?.focus();
+      }
+      if (
+        firstError.field === "time" &&
+        document.activeElement !== timeRef.current
+      ) {
+        timeRef?.current?.focus();
+      }
+      if (
+        firstError.field === "language" &&
+        document.activeElement !== languageRef.current
+      ) {
+        languageRef?.current?.focus();
+      }
+    }
+  }, [errors]);
 
   const [formValues, setFormValues] = useState({
     name: undefined,
@@ -60,7 +91,8 @@ function NewsletterFormContainer() {
   });
 
   const getError = (field: string) => {
-    const error = errors?.find((error: any) => error.field === field);
+    const error = errors?.find((err: any) => err.field === field);
+
     return error?.message || false;
   };
 
@@ -91,8 +123,7 @@ function NewsletterFormContainer() {
       });
   };
 
-  const onFormItemsChange = (e: any) => {
-    setErrors(errors.filter((error: any) => error.field !== e.target.name));
+  const onFormItemsChange = (e: any) => {      
     setFormValues({ ...formValues, [e.target.name]: e.target.value });
   };
 
@@ -140,16 +171,21 @@ function NewsletterFormContainer() {
               onChange={onFormItemsChange}
             />
             <Input
+              innerRef={emailRef}
               type="text"
               label="Email"
               required
+              aria-required="true"
               aria-label="Email"
               id="email"
               name="email"
               error={getError("email")}
               onChange={onFormItemsChange}
+              // onFocus={(e) => {setErrors(errors.filter((error: any) => error.field !== e.target.name));}}
+
             />
             <SelectBox
+              innerRef={languageRef}
               type="text"
               placeholder="Language"
               label="Preferred Language"
@@ -163,25 +199,29 @@ function NewsletterFormContainer() {
                 { value: "de", label: "German" },
                 { value: "fa", label: "Persian" },
                 { value: "af", label: "African (To test error handling)" },
-
               ]}
               value={formValues.language}
               onChange={onFormItemsChange}
             />
             <SelectBox
+              innerRef={timeRef}
               type="text"
               placeholder="Time"
               label="Preferred Time"
               id="time"
               name="time"
               aria-label="Preferred Time"
+              aria-required="true"
               error={getError("time")}
               required
               options={[
                 { value: "MM", label: "Monday Morning" },
                 { value: "WM", label: "Wednesday Morning" },
                 { value: "SE", label: "Sunday Evening" },
-                { value: "TE", label: "Tuesday Evening (To test error handling)" },
+                {
+                  value: "TE",
+                  label: "Tuesday Evening (To test error handling)",
+                },
               ]}
               value={formValues.time}
               onChange={onFormItemsChange}

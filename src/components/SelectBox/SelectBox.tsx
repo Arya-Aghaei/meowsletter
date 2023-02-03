@@ -16,9 +16,10 @@ interface SelectBoxProps extends React.HTMLProps<HTMLSelectElement> {
   label?: string;
   id: string;
   error?: string;
+  innerRef?: any;
 }
 
-function SelectBox({ options = [], label, ...props }: SelectBoxProps) {
+function SelectBox({ options = [], label,innerRef, ...props }: SelectBoxProps) {
   return (
     <FormItemWrapper>
       {label && (
@@ -28,7 +29,7 @@ function SelectBox({ options = [], label, ...props }: SelectBoxProps) {
         </FormItemLabel>
       )}
       <SelectWrapper>
-        <SelectBoxComponent {...props} value={props?.value || 0}>
+        <SelectBoxComponent {...props} value={props?.value || 0} ref={innerRef}>
           <SelectBoxOption value={0} disabled hidden>
             Select your option
           </SelectBoxOption>

@@ -22,7 +22,9 @@ export const SelectWrapper = styled.div`
   }
 `;
 
-export const SelectBoxComponent: any = styled.select`
+export const SelectBoxComponent: any = styled.select.attrs(({ref}) => ({
+  ref: ref,
+}))`
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
@@ -30,6 +32,7 @@ export const SelectBoxComponent: any = styled.select`
   width: 100%;
   border: none;
   outline: none;
+  outline-color: red;
   color: #ffffff;
   font-size: 1rem;
   padding: 0.5rem 1rem;

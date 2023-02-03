@@ -9,9 +9,10 @@ interface InputProps extends React.HTMLProps<HTMLInputElement> {
   label?: string;
   id: string;
   error?: string;
+  innerRef?: any;
 }
 
-function Input({ label, ...props }: InputProps) {
+function Input({ label, innerRef, ...props }: InputProps) {
   return (
     <FormItemWrapper>
       {label && (
@@ -20,7 +21,7 @@ function Input({ label, ...props }: InputProps) {
           {props?.required && <FormItemRequiredLabel>*</FormItemRequiredLabel>}
         </InputLabel>
       )}
-      <InputComponent {...props} />
+      <InputComponent {...props} ref={innerRef} />
       {props?.error && (
         <FormItemErrorMessage>{props?.error}</FormItemErrorMessage>
       )}

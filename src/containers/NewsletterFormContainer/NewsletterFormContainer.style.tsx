@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const NewsletterSubscribedMessage = styled.h4`
+export const NewsletterSubscribedMessage = styled.p`
   color: white;
   margin-top: 50px;
   margin-bottom: 0px;
