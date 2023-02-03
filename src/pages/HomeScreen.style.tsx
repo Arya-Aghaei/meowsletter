@@ -35,7 +35,7 @@ export const HomeScreenContent = styled.main`
   order: 0;
   width: 100%;
   min-height: calc(30vh - 5rem);
-  margin: 0 50px;
+  margin: 0px 50px -40px;
 
   h1,
   p {

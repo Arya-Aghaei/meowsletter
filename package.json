@@ -21,7 +21,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "dev": "concurrently --kill-others \"npm run start\" \"cd ../meowsletter-api && npm run start\"",
+    "start:server": "cd ../meowsletter-api && npm run start",
+    "dev": "concurrently --kill-others \"npm:start:server\" \"npm:start\"",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

@@ -9,11 +9,11 @@ export const NavbarWrapper = styled.nav`
   top: 0;
   left: 0;
   right: 0;
-
+  flex-wrap: wrap;
   flex-direction: row;
   justify-content: space-between;
 
-  ul{
+  ul {
     flex: 1;
     display: flex;
     justify-content: space-between;
@@ -21,15 +21,15 @@ export const NavbarWrapper = styled.nav`
     list-style: none;
     margin: 0;
     padding: 0;
-    li{
-      a{
+    li {
+      a {
         color: #fff;
         text-decoration: none;
         font-size: 1.2rem;
         font-weight: 700;
         text-shadow: 1px 2px 5px #000;
         transition: all 0.3s ease-in-out;
-        &:hover{
+        &:hover {
           color: #fe8e6e;
         }
       }
