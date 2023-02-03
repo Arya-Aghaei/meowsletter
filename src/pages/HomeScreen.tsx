@@ -11,7 +11,7 @@ function HomeScreen() {
       <HomeScreenWrapper>
         <HomeScreenContent>
           <NewsletterBackgroundImage
-            src="/images/newsletter.png"
+            src="/images/newsletter.webp"
             alt="meowsletter"
           />
           <h1>Stay Up-to-Date with Our Latest News!</h1>

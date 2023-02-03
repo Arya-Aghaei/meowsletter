@@ -4,7 +4,7 @@ function Navbar() {
   return (
     <NavbarWrapper>
       <NavbarLogo href="/">
-        <NavbarImage src="/images/logo.png" alt="meowsletter logo" />
+        <NavbarImage src="/images/logo.webp" alt="meowsletter logo" />
         MEOWSLETTER
       </NavbarLogo>
       <ul>
