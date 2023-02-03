@@ -13,7 +13,6 @@
   </p>
 </p>
 
-![License](https://img.shields.io/github/license/Arya-Aghaei/meowsletter)
 
 ## Table Of Contents
 
