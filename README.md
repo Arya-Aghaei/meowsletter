@@ -25,7 +25,7 @@
 
 ## About The Project
 
-![Screen Shot](public/images/screenshot.png)
+![Screen Shot](public/images/Screenshot.png)
 
 Meowsletter! A newsletter project built with React and powered by LOVE 🫶!
 
