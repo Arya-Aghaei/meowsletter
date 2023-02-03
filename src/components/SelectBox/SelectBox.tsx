@@ -15,21 +15,34 @@ interface SelectBoxProps extends React.HTMLProps<HTMLSelectElement> {
   options: { value: string; label: string }[];
   label?: string;
   id: string;
-  error?: string;
+  error?: string | boolean;
   innerRef?: any;
 }
 
-function SelectBox({ options = [], label,innerRef, ...props }: SelectBoxProps) {
+function SelectBox({
+  options = [],
+  label,
+  innerRef,
+  ...props
+}: SelectBoxProps) {
   return (
     <FormItemWrapper>
       {label && (
-        <FormItemLabel htmlFor={props?.id}>
+        <FormItemLabel
+          htmlFor={props?.id}
+          data-testid={`label-for-${props?.id}`}
+        >
           {label}{" "}
           {props?.required && <FormItemRequiredLabel>*</FormItemRequiredLabel>}
         </FormItemLabel>
       )}
       <SelectWrapper>
-        <SelectBoxComponent {...props} value={props?.value || 0} ref={innerRef}>
+        <SelectBoxComponent
+          {...props}
+          value={props?.value || 0}
+          ref={innerRef}
+          data-testid={`select-${props?.id}`}
+        >
           <SelectBoxOption value={0} disabled hidden>
             Select your option
           </SelectBoxOption>
@@ -41,7 +54,12 @@ function SelectBox({ options = [], label,innerRef, ...props }: SelectBoxProps) {
         </SelectBoxComponent>
       </SelectWrapper>
       {props?.error && (
-        <FormItemErrorMessage>{props?.error}</FormItemErrorMessage>
+        <FormItemErrorMessage
+          role="alert"
+          data-testid={`error-message-${props?.id}`}
+        >
+          {props?.error}
+        </FormItemErrorMessage>
       )}
     </FormItemWrapper>
   );

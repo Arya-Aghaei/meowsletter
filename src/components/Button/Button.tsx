@@ -11,7 +11,7 @@ function Button(props: ButtonProps) {
       <ButtonComponent {...props} disabled={props?.isLoading}>
         {props?.isLoading ? (
           <>
-            <Loading text="Loading..." size={10} />
+            <Loading text="Loading..." size={10} data-testid="btn-loading" />
           </>
         ) : (
           props?.children

@@ -43,6 +43,12 @@ export const HomeScreenContent = styled.main`
     text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     font-weight: 700;
   }
+  h1{
+    margin-bottom:5px ;
+  }
+  p{
+    margin-top: 0;
+  }
 `;
 export const HomeScreenSidebar = styled.aside`
     flex-grow: 0;

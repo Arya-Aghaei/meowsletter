@@ -91,9 +91,14 @@ function NewsletterFormContainer() {
   });
 
   const getError = (field: string) => {
-    const error = errors?.find((err: any) => err.field === field);
-
-    return error?.message || false;
+    try {
+      if (!errors || errors.length === 0) return false;
+      const error = errors && errors?.find((err: any) => err.field === field);
+      return error?.message || false;
+    } catch (e) {
+      console.log(e);
+      return false;
+    }
   };
 
   const submitForm = (e: any) => {
@@ -111,9 +116,11 @@ function NewsletterFormContainer() {
             setSubscribed(true);
           })
           .catch(function (error) {
-            //set server errors if any
+            //set server validation errors if any
             setLoading(false);
-            setErrors(error?.response?.data?.errors || error);
+            if (error?.response?.data?.errors)
+              setErrors(error?.response?.data?.errors);
+            // Can be handled in a notification component for network errors
           });
       })
       .catch((error: any) => {
@@ -123,13 +130,17 @@ function NewsletterFormContainer() {
       });
   };
 
-  const onFormItemsChange = (e: any) => {      
+  const onFormItemsChange = (e: any) => {
     setFormValues({ ...formValues, [e.target.name]: e.target.value });
   };
 
   return (
     <>
-      <NewsletterFormCard name="newsletter-form" onSubmit={submitForm}>
+      <NewsletterFormCard
+        name="newsletter-form"
+        data-testid="newsletter-form"
+        onSubmit={submitForm}
+      >
         <Lottie
           animationData={require("../../assets/animations/subscribed.json")}
           loop={false}
@@ -142,10 +153,11 @@ function NewsletterFormContainer() {
             top: -65,
           }}
           lottieRef={animationRef}
+          data-testid={`form-animation`}
         />
         {subscribed ? (
           <>
-            <NewsletterSubscribedMessage>
+            <NewsletterSubscribedMessage data-testid="subscribed-message">
               Thank you for signing up for our newsletter! You will now receive
               regular updates and exclusive content from us. Keep an eye on your
               inbox for our next edition. If at any time you wish to
@@ -153,6 +165,7 @@ function NewsletterFormContainer() {
               emails. Thank you for being a part of our community!
             </NewsletterSubscribedMessage>
             <Button
+              data-testid="subscribed-button"
               onClick={() => {
                 window.location.href = "/";
               }}
@@ -181,8 +194,6 @@ function NewsletterFormContainer() {
               name="email"
               error={getError("email")}
               onChange={onFormItemsChange}
-              // onFocus={(e) => {setErrors(errors.filter((error: any) => error.field !== e.target.name));}}
-
             />
             <SelectBox
               innerRef={languageRef}
@@ -226,7 +237,11 @@ function NewsletterFormContainer() {
               value={formValues.time}
               onChange={onFormItemsChange}
             />
-            <Button onClick={submitForm} isLoading={loading}>
+            <Button
+              onClick={submitForm}
+              isLoading={loading}
+              data-testid={`submit-btn`}
+            >
               Subscribe
             </Button>
           </>

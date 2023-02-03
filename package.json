@@ -3,8 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "@types/node": "^16.18.11",
     "@types/react": "^18.0.27",
@@ -24,7 +22,7 @@
     "start:server": "cd ../meowsletter-api && npm run start",
     "dev": "concurrently --kill-others \"npm:start:server\" \"npm:start\"",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "cypress open",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -46,10 +44,13 @@
     ]
   },
   "devDependencies": {
+    "@cypress/code-coverage": "^3.10.0",
     "@types/styled-components": "^5.1.26",
     "@types/uuid": "^9.0.0",
     "concurrently": "^7.6.0",
+    "cypress": "^12.5.1",
     "eslint": "^8.33.0",
-    "eslint-plugin-jsx-a11y": "^6.7.1"
+    "eslint-plugin-jsx-a11y": "^6.7.1",
+    "react-test-renderer": "^18.2.0"
   }
 }
