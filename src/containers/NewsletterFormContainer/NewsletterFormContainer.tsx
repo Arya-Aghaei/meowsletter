@@ -1,12 +1,15 @@
-import { useState } from "react";
+import axios from "axios";
+import Lottie from "lottie-react";
+import React, { useEffect, useState } from "react";
 import Button from "../../components/Button";
 import Input from "../../components/Input";
 import SelectBox from "../../components/SelectBox";
 import {
   NewsletterFormCard,
-  NewsletterFormWrapper,
+  NewsletterSubscribedMessage,
 } from "./NewsletterFormContainer.style";
 
+const API_URL = process.env.REACT_APP_API_URL;
 interface FormValues {
   name?: string;
   email?: string;
@@ -40,7 +43,14 @@ const validateForm = (formValues: FormValues) => {
 function NewsletterFormContainer() {
   const [loading, setLoading] = useState(false);
   const [errors, setErrors]: any[] = useState([]);
-  console.log(errors);
+  const [subscribed, setSubscribed] = useState(false);
+  const animationRef: any = React.useRef(null);
+
+  useEffect(() => {
+    if (subscribed) {
+      animationRef?.current?.play();
+    }
+  }, [subscribed]);
 
   const [formValues, setFormValues] = useState({
     name: undefined,
@@ -61,16 +71,22 @@ function NewsletterFormContainer() {
     validateForm(formValues)
       .then((values) => {
         //submit form if no errors
-        setLoading(false);
-
-        setTimeout(() => {
-          setLoading(false);
-        }, 2000);
+        axios
+          .post(`${API_URL}/newsletter`, values)
+          .then(function (response) {
+            console.log(response);
+            setLoading(false);
+            setSubscribed(true);
+          })
+          .catch(function (error) {
+            //set server errors if any
+            setLoading(false);
+            setErrors(error?.response?.data?.errors || error);
+          });
       })
       .catch((error: any) => {
-        //set errors if any
+        //set local errors if any
         setLoading(false);
-
         setErrors(error);
       });
   };
@@ -81,80 +97,102 @@ function NewsletterFormContainer() {
   };
 
   return (
-    <NewsletterFormWrapper>
-      <section
-        style={{
-          color: "white",
-          padding: "0 3rem",
-        }}
-      >
-        <h1>Stay Up-to-Date with Our Latest News and Updates!</h1>
-        <p>
-          Join our newsletter community and receive the latest news, tips, and
-          exclusive offers from us.
-        </p>
-      </section>
+    <>
       <NewsletterFormCard name="newsletter-form" onSubmit={submitForm}>
-        <Input
-          type="text"
-          label="Name"
-          name="name"
-          id="name"
-          aria-label="Name"
-          value={formValues.name}
-          onChange={onFormItemsChange}
+        <Lottie
+          animationData={require("../../assets/animations/subscribed.json")}
+          loop={false}
+          autoplay={false}
+          style={{
+            width: 200,
+            height: 200,
+            margin: -50,
+            position: "absolute",
+            top: -65,
+          }}
+          lottieRef={animationRef}
         />
-        <Input
-          type="text"
-          label="Email"
-          required
-          aria-label="Email"
-          id="email"
-          name="email"
-          error={getError("email")}
-          value={formValues.email}
-          onChange={onFormItemsChange}
-        />
-        <SelectBox
-          type="text"
-          placeholder="Language"
-          label="Language"
-          id="language"
-          name="language"
-          aria-label="Language"
-          error={getError("language")}
-          options={[
-            { value: "en-gb", label: "English UK" },
-            { value: "en-us", label: "English US" },
-            { value: "de", label: "German" },
-            { value: "fa", label: "Persian" },
-          ]}
-          defaultValue={"en-gb"}
-          value={formValues.language}
-          onChange={onFormItemsChange}
-        />
-        <SelectBox
-          type="text"
-          placeholder="Time"
-          label="Time"
-          id="time"
-          name="time"
-          aria-label="Time"
-          error={getError("time")}
-          required
-          options={[
-            { value: "MM", label: "Monday Morning" },
-            { value: "WM", label: "Wednesday Morning" },
-            { value: "SE", label: "Sunday Evening" },
-          ]}
-          value={formValues.time}
-          onChange={onFormItemsChange}
-        />
-        <Button onClick={submitForm} loading={loading}>
-          Subscribe
-        </Button>
+        {subscribed ? (
+          <>
+            <NewsletterSubscribedMessage>
+              Thank you for signing up for our newsletter! You will now receive
+              regular updates and exclusive content from us. Keep an eye on your
+              inbox for our next edition. If at any time you wish to
+              unsubscribe, simply click the link at the bottom of one of our
+              emails. Thank you for being a part of our community!
+            </NewsletterSubscribedMessage>
+            <Button
+              onClick={() => {
+                window.location.href = "/";
+              }}
+            >
+              Home Page
+            </Button>
+          </>
+        ) : (
+          <>
+            <Input
+              type="text"
+              label="Name"
+              name="name"
+              id="name"
+              aria-label="Name"
+              onChange={onFormItemsChange}
+            />
+            <Input
+              type="text"
+              label="Email"
+              required
+              aria-label="Email"
+              id="email"
+              name="email"
+              error={getError("email")}
+              onChange={onFormItemsChange}
+            />
+            <SelectBox
+              type="text"
+              placeholder="Language"
+              label="Preferred Language"
+              id="language"
+              name="language"
+              aria-label="Preferred Language"
+              error={getError("language")}
+              options={[
+                { value: "en-gb", label: "English UK" },
+                { value: "en-us", label: "English US" },
+                { value: "de", label: "German" },
+                { value: "fa", label: "Persian" },
+                { value: "af", label: "African (To test error handling)" },
+
+              ]}
+              value={formValues.language}
+              onChange={onFormItemsChange}
+            />
+            <SelectBox
+              type="text"
+              placeholder="Time"
+              label="Preferred Time"
+              id="time"
+              name="time"
+              aria-label="Preferred Time"
+              error={getError("time")}
+              required
+              options={[
+                { value: "MM", label: "Monday Morning" },
+                { value: "WM", label: "Wednesday Morning" },
+                { value: "SE", label: "Sunday Evening" },
+                { value: "TE", label: "Tuesday Evening (To test error handling)" },
+              ]}
+              value={formValues.time}
+              onChange={onFormItemsChange}
+            />
+            <Button onClick={submitForm} isLoading={loading}>
+              Subscribe
+            </Button>
+          </>
+        )}
       </NewsletterFormCard>
-    </NewsletterFormWrapper>
+    </>
   );
 }
 

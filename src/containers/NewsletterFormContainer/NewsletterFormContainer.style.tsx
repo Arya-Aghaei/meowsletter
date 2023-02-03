@@ -1,19 +1,10 @@
 import styled from "styled-components";
 
-export const NewsletterFormWrapper = styled.aside`
-  width: 100%;
-
-  @media (min-width: 768px) {
-    width: 60%;
-  }
-
-  @media (min-width: 1024px) {
-    width: 50%;
-  }
-
-  @media (min-width: 1280px) {
-    width: 40%;
-  }
+export const NewsletterSubscribedMessage = styled.h4`
+  color: white;
+  margin-top: 50px;
+  margin-bottom: 0px;
+  line-height: 1.5rem;
 `;
 
 export const NewsletterFormCard = styled.form`
@@ -26,10 +17,11 @@ export const NewsletterFormCard = styled.form`
   border: 1px solid rgba(255, 255, 255, 0.3);
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   padding: 1rem;
   text-align: center;
+
+  transition: all 0.3s ease-in-out;
 
   @media (max-width: 768px) {
     background: rgba(0, 0, 0, 0.5);

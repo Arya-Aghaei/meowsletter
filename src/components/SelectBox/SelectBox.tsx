@@ -9,6 +9,7 @@ import {
   SelectBoxOption,
   SelectWrapper,
 } from "./SelectBox.style";
+import { v4 as uuidv4 } from "uuid";
 
 interface SelectBoxProps extends React.HTMLProps<HTMLSelectElement> {
   options: { value: string; label: string }[];
@@ -27,15 +28,12 @@ function SelectBox({ options = [], label, ...props }: SelectBoxProps) {
         </FormItemLabel>
       )}
       <SelectWrapper>
-        <SelectBoxComponent {...props}>
-          <SelectBoxOption value="" disabled selected hidden>
+        <SelectBoxComponent {...props} value={props?.value || 0}>
+          <SelectBoxOption value={0} disabled hidden>
             Select your option
           </SelectBoxOption>
           {options.map((option) => (
-            <SelectBoxOption
-              value={option.value}
-              selected={props?.defaultValue === option.value}
-            >
+            <SelectBoxOption key={uuidv4()} value={option.value}>
               {option.label}
             </SelectBoxOption>
           ))}

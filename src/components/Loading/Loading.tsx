@@ -18,7 +18,7 @@ function Loading(props: LoadingProps) {
 }
 
 Loading.defaultProps = {
-  loading: true,
+  isLoading: true,
   size: 80,
   dir: "left",
 };

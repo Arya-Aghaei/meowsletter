@@ -24,13 +24,11 @@ export const FormItemRequiredLabel = styled.span`
 `;
 
 export const FormItemErrorMessage = styled.span`
-  color: #ff3700;
+  color: #ff4d1c;
   font-size: 0.9rem;
   margin: 0.25rem 0;
   text-align: left;
   width: 100%;
   text-shadow: 0 0 5px #262626;
-  position: absolute;
-  bottom: -1.5rem;
-  transition: all 3s ease-in-out;
+  margin-bottom: -1rem;
 `;

@@ -25,7 +25,7 @@ export const LoadingComponent: any = styled.div`
 
     border-color: #fff transparent #fff transparent;
     ${(props: any) =>
-      props.loading && `animation: loading 1.2s linear infinite;`}
+      props.isLoading && `animation: loading 1.2s linear infinite;`}
   }
 
   @keyframes loading {
